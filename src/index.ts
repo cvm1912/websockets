@@ -2,14 +2,11 @@
 import WebSocket, {WebSocketServer} from "ws";
 const wss = new WebSocketServer({port:8080})
 
-wss.on("connection",function(socket){
-  console.log("user connected")
+let usercount = 0;
 
-  socket.on("message", (e)=>{
-       if(e.toString() === "ping"){
-        socket.send("pong")
-       }
-  })
+wss.on("connection",function(socket){
+   usercount = usercount+1;
+   console.log("user connected",usercount);
 })
 
 
