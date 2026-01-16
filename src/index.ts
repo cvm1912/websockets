@@ -1,8 +1,8 @@
-import {WebSocketServer} from 'ws'
+import {WebSocketServer, WebSocket} from 'ws'
 const ws = new WebSocketServer({port:8080});
 
 let userCount = 0;
-let allSockets = [];
+let allSockets:WebSocket[] = [];
 
 // new connection 
 ws.on('connection',(socket)=>{
@@ -13,11 +13,16 @@ ws.on('connection',(socket)=>{
   socket.on("message",(message)=>{
     allSockets.forEach((sock)=>sock.send("Hello, Mr."+ message.toString()))
   })
+
+  socket.on("disconnect", () => {
+  allSockets = allSockets.filter(x => x !== socket);
+  });
 })
 
 
 
-// how do you recive and send a message to server 
+
+
 
 
 
